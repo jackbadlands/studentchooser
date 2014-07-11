@@ -31,7 +31,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="group"/>
+       <widget class="QComboBox" name="classes"/>
       </item>
      </layout>
     </item>
@@ -73,7 +73,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QListWidget" name="students"/>
+           <widget class="QListView" name="students"/>
           </item>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -112,7 +112,7 @@ student</string>
        <attribute name="title">
         <string>&amp;Generate subgroups or pairs</string>
        </attribute>
-       <widget class="QListWidget" name="attendants">
+       <widget class="QListView" name="attendants">
         <property name="geometry">
          <rect>
           <x>10</x>
