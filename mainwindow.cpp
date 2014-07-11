@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <QSettings>
 #include <QMessageBox>
+#include <QDesktopServices>
+#include <QUrl>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -199,4 +201,9 @@ void MainWindow::on_actionImport_from_file_triggered()
     QMessageBox msgBox(this);
     msgBox.setText("Importing data is not implemented.");
     msgBox.exec();
+}
+
+void MainWindow::on_actionOpen_project_webpage_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/vi/studentchooser"));
 }

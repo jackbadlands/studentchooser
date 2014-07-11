@@ -308,28 +308,40 @@ student</string>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="actionExport_to_file"/>
     <addaction name="actionImport_from_file"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionOpen_project_webpage"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuHelp"/>
   </widget>
   <action name="actionExport_to_file">
    <property name="text">
-    <string>Export to file</string>
+    <string>&amp;Export to file</string>
    </property>
   </action>
   <action name="actionImport_from_file">
    <property name="text">
-    <string>Import from file</string>
+    <string>&amp;Import from file</string>
    </property>
   </action>
   <action name="actionQuit">
    <property name="text">
-    <string>Quit</string>
+    <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="actionOpen_project_webpage">
+   <property name="text">
+    <string>&amp;Open project webpage</string>
    </property>
   </action>
  </widget>
