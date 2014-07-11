@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    mylistmodel.cpp
+    mylistmodel.cpp \
+    listviewwithmessagewhenempty.cpp
 
 HEADERS  += mainwindow.h \
     mylistmodel.h \
-    data.h
+    data.h \
+    listviewwithmessagewhenempty.h
 
 FORMS    += mainwindow.ui

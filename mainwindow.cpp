@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QListWidgetItem* item;
 
     classes.append(Class());
     Class &c = classes.last();
