@@ -6,6 +6,7 @@
 #include <QList>
 #include <algorithm>
 #include <QSettings>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -169,4 +170,32 @@ void MainWindow::on_pushButton_7_clicked()
     if (groupCountCandidate == 0) ++groupCountCandidate;
 
     doGrouping(s, groupCountCandidate);
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    QMessageBox msgBox(this);
+    msgBox.setText("Creating classes is not implemented.");
+    msgBox.exec();
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    QMessageBox msgBox(this);
+    msgBox.setText("Removing classes is not implemented.");
+    msgBox.exec();
+}
+
+void MainWindow::on_actionExport_to_file_triggered()
+{
+    QMessageBox msgBox(this);
+    msgBox.setText("Exporting data is not implemented.");
+    msgBox.exec();
+}
+
+void MainWindow::on_actionImport_from_file_triggered()
+{
+    QMessageBox msgBox(this);
+    msgBox.setText("Importing data is not implemented.");
+    msgBox.exec();
 }

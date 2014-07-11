@@ -35,6 +35,14 @@ private slots:
 
     void on_pushButton_7_clicked();
 
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_actionExport_to_file_triggered();
+
+    void on_actionImport_from_file_triggered();
+
 private:
     Ui::MainWindow *ui;
     QList<Class> classes;
