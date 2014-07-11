@@ -146,7 +146,7 @@ student</string>
              </layout>
             </item>
             <item>
-             <widget class="QListView" name="attendants">
+             <widget class="ListViewWithMessageWhenEmpty" name="attendants">
               <property name="selectionMode">
                <enum>QAbstractItemView::ExtendedSelection</enum>
               </property>
@@ -167,6 +167,12 @@ student</string>
                  <layout class="QHBoxLayout" name="horizontalLayout_5">
                   <item>
                    <widget class="QPushButton" name="pushButton_7">
+                    <property name="minimumSize">
+                     <size>
+                      <width>160</width>
+                      <height>0</height>
+                     </size>
+                    </property>
                     <property name="text">
                      <string>&amp;Split to subgroups of N:</string>
                     </property>
@@ -185,6 +191,12 @@ student</string>
                  <layout class="QHBoxLayout" name="horizontalLayout_6">
                   <item>
                    <widget class="QPushButton" name="pushButton_8">
+                    <property name="minimumSize">
+                     <size>
+                      <width>160</width>
+                      <height>0</height>
+                     </size>
+                    </property>
                     <property name="text">
                      <string>S&amp;plit to N subgroups:</string>
                     </property>
@@ -312,6 +324,13 @@ student</string>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ListViewWithMessageWhenEmpty</class>
+   <extends>QListView</extends>
+   <header>listviewwithmessagewhenempty.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
