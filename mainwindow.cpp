@@ -43,6 +43,7 @@ MainWindow::~MainWindow()
     delete ui;
 
     QSettings set("_Vi","studentchooser");
+    set.setValue("version", 0);
     set.setValue("preview/count", lm->rowCount(QModelIndex()));
     for(int i = 0; i < lm->rowCount(QModelIndex()); ++i) {
         bool present = (Qt::CheckState)lm->data(lm->index(i, 0), Qt::CheckStateRole).toUInt() == Qt::Checked;
