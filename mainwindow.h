@@ -2,18 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QList>
+#include "data.h"
 
 class QListWidgetItem;
+class MyListModel;
+class QModelIndex;
 
 namespace Ui {
 class MainWindow;
 }
-
-struct Class {
-    QList<QString> students;
-    QString name;
-};
 
 class MainWindow : public QMainWindow
 {
@@ -32,7 +29,7 @@ private slots:
 
     void on_pushButton_6_clicked();
 
-    void on_attendants_itemChanged(QListWidgetItem *item);
+    void on_attendants_itemChanged(const QModelIndex &ib, const QModelIndex &ie);
 
     void on_pushButton_8_clicked();
 
@@ -41,6 +38,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QList<Class> classes;
+    MyListModel *lm;
 
     QList<QString> getShuffledPresentStudents();
     void doGrouping(QList<QString> s, int groupCount);

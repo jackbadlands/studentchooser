@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "mylistmodel.h"
 
 #include <QList>
 #include <algorithm>
@@ -14,19 +15,24 @@ MainWindow::MainWindow(QWidget *parent) :
     classes.append(Class());
     Class &c = classes.last();
     c.name = "Example class";
-    c.students.append("mist");
-    c.students.append("spank");
-    c.students.append("bob");
-    c.students.append("alice");
-    c.students.append("malice");
-    c.students.append("kill");
-    c.students.append("dragon");
+    { Student s; s.name = "mist"; s.present = Qt::Unchecked; c.students.append(s); }
+    { Student s; s.name = "spank"; s.present = Qt::Unchecked; c.students.append(s); }
+    { Student s; s.name = "bob"; s.present = Qt::Unchecked; c.students.append(s); }
+    { Student s; s.name = "alice"; s.present = Qt::Unchecked; c.students.append(s); }
+    { Student s; s.name = "malice"; s.present = Qt::Unchecked; c.students.append(s); }
+    { Student s; s.name = "kill"; s.present = Qt::Unchecked; c.students.append(s); }
+    { Student s; s.name = "dragon"; s.present = Qt::Unchecked; c.students.append(s); }
 
-    item = new QListWidgetItem("234", ui->attendants);
-    item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
-    item->setCheckState(Qt::Unchecked); // AND initialize check state
+    lm = new MyListModel(&c.students, this);
 
+    ui->students->setModel(lm);
+    ui->attendants->setModel(lm);
+    //ui->classes->setModel(lm);
+
+    connect(lm,SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(on_attendants_itemChanged(QModelIndex,QModelIndex)));
+    on_attendants_itemChanged(QModelIndex(), QModelIndex());
 }
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -34,41 +40,39 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    ui->students->addItem("New student");
-    QListWidgetItem* i = ui->students->item(ui->students->count()-1);
-    i->setFlags (i->flags () | Qt::ItemIsEditable);
-    ui->students->editItem(i);
-    ui->students->scrollToItem(i);
+    QModelIndex i = lm->addEntry("New student");
+    ui->students->edit(i);
+    ui->students->scrollTo(i);
 }
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    foreach (QListWidgetItem *i, ui->students->selectedItems()) {
-        delete i;
+    foreach (QModelIndex i, ui->students->selectionModel()->selectedRows()) {
+        lm->removeRow(i.row());
     }
 }
 
 void MainWindow::on_pushButton_5_clicked()
 {
-    for(int i = 0; i < ui->attendants->count(); ++i) {
-        ui->attendants->item(i)->setCheckState(Qt::Checked);
+    for(int i = 0; i < lm->rowCount(QModelIndex()); ++i) {
+        lm->setData(lm->index(i, 0), QVariant(Qt::Checked), Qt::CheckStateRole);
     }
 }
 
 void MainWindow::on_pushButton_6_clicked()
 {
-    for(int i = 0; i < ui->attendants->count(); ++i) {
-        ui->attendants->item(i)->setCheckState(Qt::Unchecked);
+    for(int i = 0; i < lm->rowCount(QModelIndex()); ++i) {
+        lm->setData(lm->index(i, 0), QVariant(Qt::Unchecked), Qt::CheckStateRole);
     }
 }
 
-void MainWindow::on_attendants_itemChanged(QListWidgetItem *item)
+void MainWindow::on_attendants_itemChanged(const QModelIndex &ib, const QModelIndex &ie)
 {
-    (void)item; // FIXME: ineffectinve O(n*n) update
+    (void)ib; (void)ie;// FIXME: ineffectinve O(n*n) update
     int present = 0;
     int absent = 0;
-    for(int i = 0; i < ui->attendants->count(); ++i) {
-        if (ui->attendants->item(i)->checkState() == Qt::Checked) {
+    for(int i = 0; i < lm->rowCount(QModelIndex()); ++i) {
+        if ((Qt::CheckState)lm->data(lm->index(i, 0), Qt::CheckStateRole).toUInt() == Qt::Checked) {
             ++present;
         } else {
             ++absent;
@@ -80,10 +84,9 @@ void MainWindow::on_attendants_itemChanged(QListWidgetItem *item)
 QList<QString> MainWindow::getShuffledPresentStudents()
 {
     QList<QString> presentStudents;
-    for(int i = 0; i < ui->attendants->count(); ++i) {
-        QListWidgetItem *it = ui->attendants->item(i);
-        if (it->checkState() == Qt::Checked) {
-            presentStudents.append(it->text());
+    for(int i = 0; i < lm->rowCount(QModelIndex()); ++i) {
+        if ((Qt::CheckState)lm->data(lm->index(i, 0), Qt::CheckStateRole).toUInt() == Qt::Checked) {
+            presentStudents.append(lm->data(lm->index(i, 0), Qt::DisplayRole).toString());
         }
     }
 
