@@ -43,6 +43,8 @@ private slots:
 
     void on_actionImport_from_file_triggered();
 
+    void on_actionOpen_project_webpage_triggered();
+
 private:
     Ui::MainWindow *ui;
     QList<Class> classes;
