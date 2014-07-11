@@ -2,8 +2,10 @@
 #include "ui_mainwindow.h"
 #include "mylistmodel.h"
 
+
 #include <QList>
 #include <algorithm>
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,13 +16,16 @@ MainWindow::MainWindow(QWidget *parent) :
     classes.append(Class());
     Class &c = classes.last();
     c.name = "Example class";
-    { Student s; s.name = "mist"; s.present = Qt::Unchecked; c.students.append(s); }
-    { Student s; s.name = "spank"; s.present = Qt::Unchecked; c.students.append(s); }
-    { Student s; s.name = "bob"; s.present = Qt::Unchecked; c.students.append(s); }
-    { Student s; s.name = "alice"; s.present = Qt::Unchecked; c.students.append(s); }
-    { Student s; s.name = "malice"; s.present = Qt::Unchecked; c.students.append(s); }
-    { Student s; s.name = "kill"; s.present = Qt::Unchecked; c.students.append(s); }
-    { Student s; s.name = "dragon"; s.present = Qt::Unchecked; c.students.append(s); }
+
+    QSettings set("_Vi","studentchooser");
+
+    int n = set.value("preview/count", 0).toInt();
+    for(int i = 0; i < n; ++i) {
+        Student s;
+        s.name =    set.value(QString("preview/%1/name"   ).arg(i), "???").toString();
+        s.present = set.value(QString("preview/%1/present").arg(i), false).toBool() ? Qt::Checked : Qt::Unchecked;
+        c.students.append(s);
+    }
 
     lm = new MyListModel(&c.students, this);
 
@@ -35,6 +40,16 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+
+    QSettings set("_Vi","studentchooser");
+    set.setValue("preview/count", lm->rowCount(QModelIndex()));
+    for(int i = 0; i < lm->rowCount(QModelIndex()); ++i) {
+        bool present = (Qt::CheckState)lm->data(lm->index(i, 0), Qt::CheckStateRole).toUInt() == Qt::Checked;
+        QString name = lm->data(lm->index(i, 0), Qt::DisplayRole).toString();
+        set.setValue(QString("preview/%1/name"   ).arg(i), name);
+        set.setValue(QString("preview/%1/present").arg(i), present);
+    }
+
 }
 
 void MainWindow::on_pushButton_3_clicked()
