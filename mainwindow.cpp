@@ -137,9 +137,20 @@ void MainWindow::on_pushButton_7_clicked()
     int groupCountCandidate = n / desiredGroupSize;
     int groupCountRemainder = n % desiredGroupSize;
 
-    if (groupCountRemainder != 0 && ui->radioPreferExtended->isChecked()) {
-        ++groupCountCandidate;
+    if (groupCountRemainder != 0) {
+        if (ui->radioPreferIncomplete->isChecked()) {
+            ++groupCountCandidate;
+        } else
+        if (ui->radioBalanced->isChecked()) {
+            if (groupCountRemainder - 1 < desiredGroupSize/2) {
+                // prefer extended
+            } else {
+                // prefer incomplete
+                ++groupCountCandidate;
+            }
+        }
     }
+
     if (groupCountCandidate == 0) ++groupCountCandidate;
 
     doGrouping(s, groupCountCandidate);

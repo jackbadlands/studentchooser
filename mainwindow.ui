@@ -230,16 +230,26 @@ student</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="radioPreferExtended">
+                 <widget class="QRadioButton" name="radioPreferIncomplete">
                   <property name="text">
                    <string>Prefer incomplete subgroups</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="radioButton_2">
+                 <widget class="QRadioButton" name="radioPreferExtended">
                   <property name="text">
                    <string>Prefer extended subgroups</string>
+                  </property>
+                  <property name="checked">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QRadioButton" name="radioBalanced">
+                  <property name="text">
+                   <string>Balanced approach</string>
                   </property>
                   <property name="checked">
                    <bool>true</bool>
